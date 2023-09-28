@@ -1,12 +1,14 @@
 export type IConfig = {
   bot: { token: string };
   server: { port: number };
+  log: { output: string };
 };
 
 function initConfig(): IConfig {
   const envs = {
     BOT_TOKEN: process.env.BOT_TOKEN,
     SERVER_PORT: process.env.SERVER_PORT,
+    LOGS_OUTPUT: process.env.LOGS_OUTPUT || 'logs.log',
   } as const;
 
   const requiredEnvsNames = ['BOT_TOKEN'] as const;
@@ -25,6 +27,9 @@ function initConfig(): IConfig {
     },
     server: {
       port: Number(envs.SERVER_PORT) || 3000,
+    },
+    log: {
+      output: envs.LOGS_OUTPUT,
     },
   };
 
